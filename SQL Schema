@@ -1,0 +1,82 @@
+CREATE TABLE coffee_shop (
+  shop_id INTEGER NOT NULL,
+  shop_name VARCHAR(50) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  state VARCHAR(2) NOT NULL,
+  PRIMARY KEY (shop_id)
+);
+
+
+CREATE TABLE employee (
+  employee_id INTEGER NOT NULL,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  hire_date DATE NOT NULL,
+  job_title VARCHAR(30) NOT NULL,
+  shop_id INTEGER NOT NULL,
+  PRIMARY KEY (employee_id),
+  FOREIGN KEY (shop_id) REFERENCES coffee_shop(shop_id )
+);
+
+
+CREATE TABLE supplier (
+  supplier_id INTEGER NOT NULL,
+  company_name VARCHAR(50) NOT NULL,
+  country VARCHAR(30) NOT NULL,
+  sales_contact_name VARCHAR(60) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  PRIMARY KEY (supplier_id)
+);
+
+CREATE TABLE coffee (
+  coffee_id INTEGER NOT NULL,
+  shop_id INTEGER NOT NULL,
+  supplier_id INTEGER NOT NULL,
+  coffee_name VARCHAR(30) NOT NULL,
+  price_per_pound NUMERIC(5,2) NOT NULL,
+  PRIMARY KEY (coffee_id),
+  FOREIGN KEY (shop_id) REFERENCES coffee_shop(shop_id ),
+  FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
+);
+
+
+INSERT INTO coffee_shop (shop_id, shop_name, city, state) 
+VALUES(1, 'First Shop', 'Gotham', 'NJ');
+INSERT INTO coffee_shop (shop_id, shop_name, city, state) 
+VALUES(2, 'Second Shop', 'Star', 'WA');
+INSERT INTO coffee_shop (shop_id, shop_name, city, state) 
+VALUES(3, 'Third Shop', 'Center', 'OH');
+
+
+INSERT INTO employee (employee_id, first_name, last_name, hire_date, job_title, shop_id) 
+VALUES(1, 'Barry', 'Allen', '2021-09-30', 'Runner', 1);
+INSERT INTO employee (employee_id, first_name, last_name, hire_date, job_title, shop_id) 
+VALUES(2, 'Bruce', 'Wayne', '2021-09-30', 'Fighter', 2);
+INSERT INTO employee (employee_id, first_name, last_name, hire_date, job_title, shop_id) 
+VALUES(3, 'Oliver', 'Queen', '2021-09-30', 'Host', 3);
+
+
+INSERT INTO supplier (supplier_id, company_name, country, sales_contact_name, email) 
+VALUES(1, 'First Company', 'United States', 'firstComp', 'firstComp@gmail.com');
+INSERT INTO supplier (supplier_id, company_name, country, sales_contact_name, email) 
+VALUES(2, 'Second Company', 'Japan', 'secondComp', 'secondComp@gmail.com');
+INSERT INTO supplier (supplier_id, company_name, country, sales_contact_name, email) 
+VALUES(3, 'Third Company', 'Italy', 'thirdComp', 'thirdComp@gmail.com');
+
+
+
+INSERT INTO coffee (coffee_id, shop_id, supplier_id, coffee_name, price_per_pound) 
+VALUES(1, 1, 1, 'Espresso', 20);
+INSERT INTO coffee (coffee_id, shop_id, supplier_id, coffee_name, price_per_pound) 
+VALUES(2, 2, 2, 'Cappuccino', 22);
+INSERT INTO coffee (coffee_id, shop_id, supplier_id, coffee_name, price_per_pound) 
+VALUES(3, 3, 3, 'Americano', 24);
+
+
+CREATE VIEW Employee_View AS
+SELECT employee_id, CONCAT(first_name, ' ', last_name) AS employee_full_name,
+hire_date, job_title,shop_id
+FROM employee;
+
+
+CREATE INDEX firstIndex ON coffee (coffee_name);

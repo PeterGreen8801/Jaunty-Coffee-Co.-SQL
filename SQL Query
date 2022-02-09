@@ -1,0 +1,13 @@
+SELECT * FROM coffee, coffee_shop, supplier
+WHERE coffee.shop_id = coffee_shop.shop_id
+AND coffee.supplier_id = supplier.supplier_id;
+
+SELECT * FROM Employee_View;
+
+SELECT * FROM coffee;
+
+SELECT * FROM supplier;
+
+SELECT * FROM employee;
+
+SELECT * FROM coffee_shop;
